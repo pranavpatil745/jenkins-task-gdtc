@@ -19,21 +19,27 @@ pipeline {
         }
         stage('Terraform Actions') {
             steps {
-                echo "Terraform action is --> ${action}"
-                script{
-                withCredentials([[$class: 'StringBinding', credentialsId: 'AWS-Credentials', variable: 'AWS_ACCESS_KEY_ID'], [$class: 'FileBinding', credentialsId: 'AWS-Secretkey', variable: 'AWS_SECRET_ACCESS_KEY']]) 
-                sh ("terraform ${action} --auto-approve")
+                  echo "Terraform action is --> ${action}"
+            script {
+                withCredentials([
+                [$class: 'StringBinding', credentialsId: 'AWS-Credentials', variable: 'AWS_ACCESS_KEY_ID'],
+                [$class: 'FileBinding', credentialsId: 'AWS-Secretkey', variable: 'AWS_SECRET_ACCESS_KEY']
+            ])   {
+                sh "terraform ${action} --auto-approve"
 
                 ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
             }
-            }
         }
+    }
+}
+
+
 	    stage('Build Docker Image') {
 	        steps{
             	sh "docker build -t ${ECR_REPOSITORY_URI}:latest ."
 	    }
  	}
-    stage('Push to ECR') {
+        stage('Push to ECR') {
             steps {
                 sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPOSITORY_URI}"
                 sh "docker tag ${ECR_REPOSITORY_URI}:latest ${ECR_REPOSITORY_URI}:latest"
