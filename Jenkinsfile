@@ -17,12 +17,16 @@ pipeline {
                 sh("terraform plan")
             }
         }
-        stage ("action") {
+         stage ("action") {
             steps {
-                  echo "Terraform action is --> ${action}"
-                  sh ("terraform ${action} --auto-approve")
-                  
+                script {
+                    echo "Terraform action is --> ${TERRAFORM_ACTION}"
+                    sh "terraform ${TERRAFORM_ACTION} --auto-approve"
+
+                    // Capture the ECR repository URI from Terraform output
+                    REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
+                    env.REPOSITORY_URI = REPOSITORY_URI  // Set the environment variable for later use
+                }
             }
         }
-    }
 }
