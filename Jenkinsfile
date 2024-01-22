@@ -21,7 +21,7 @@ pipeline {
             steps {
                   echo "Terraform action is --> ${action}"
                   sh ("terraform ${action} --auto-approve")
-		  ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
+		  
             }
         }
     }
