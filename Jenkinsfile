@@ -17,14 +17,11 @@ pipeline {
                 sh("terraform plan")
             }
         }
-         stage ("action") {
+        stage ("action") {
             steps {
-                script {
-                    echo "Terraform action is --> ${Action}"
-                    sh "terraform ${Action} --auto-approve"
-
-                    
-                }
+                  echo "Terraform action is --> ${action}"
+                  sh ("terraform ${action} --auto-approve")
+		 
             }
         }
     }
