@@ -1,8 +1,8 @@
 
-# FROM public.ecr.aws/lambda/python:3.8
+FROM public.ecr.aws/lambda/python:3.8
 
-# WORKDIR /var/task
+WORKDIR /var/task
 
-# COPY . .
+COPY . .
 
-# CMD ["test.lambda_handler"]
+CMD ["test.lambda_handler"]
