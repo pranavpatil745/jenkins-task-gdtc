@@ -17,15 +17,14 @@ pipeline {
                 sh("terraform plan")
             }
         }
-        stage('Terraform Actions') {
+        stage ("action") {
             steps {
-             {
-                sh "terraform ${action} --auto-approve"
+                  echo "Terraform action is --> ${action}"
+                  sh ("terraform ${action} --auto-approve")
+		          ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
 
-                ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
             }
         }
-    }
 
 
 
