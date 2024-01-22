@@ -20,7 +20,7 @@ pipeline {
         stage('Terraform Actions') {
             steps {
                   echo "Terraform action is --> ${action}"
-            script {
+
                 withCredentials([
                 [$class: 'StringBinding', credentialsId: 'AWS-Credentials', variable: 'AWS_ACCESS_KEY_ID'],
                 [$class: 'FileBinding', credentialsId: 'AWS-Secretkey', variable: 'AWS_SECRET_ACCESS_KEY']
@@ -30,7 +30,7 @@ pipeline {
                 ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
             }
         }
-    }
+        
 }
 
 
