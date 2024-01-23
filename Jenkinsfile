@@ -1,7 +1,7 @@
 pipeline {
     agent any
      environment {
-         ECR_REPOSITORY_URI = sh(script: 'terraform output -json ecr_repository_uri', returnStdout: true).trim()
+        ECR_REPO_URL = sh(script: 'terraform output ecr_repository_url', returnStdout: true).trim()
     }
     stages {
         stage('Checkout') {
