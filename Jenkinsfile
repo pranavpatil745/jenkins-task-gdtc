@@ -26,6 +26,17 @@ pipeline {
 		 
             }
         }
+         
+
+    stage("build") { 
+
+            steps { 
+
+                sh "docker build -t my-app ." 
+
+            } 
+
+        } 
         stage("Logging") { 
 
              steps { 
@@ -42,10 +53,10 @@ pipeline {
                 echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
 
                 // Access ECR_REPO_URL directly from the environment
-                echo "ECR Repository URL: ${ECR_REPO_URL}"
+                // echo "ECR Repository URL: ${ECR_REPO_URL}"
 
-                // Use ECR_REPO_URL in specific steps
-                sh "docker build -t ${ECR_REPO_URL}:latest ."
+                // // Use ECR_REPO_URL in specific steps
+                // sh "docker build -t ${ECR_REPO_URL}:latest ."
                    }
                 }
             }
