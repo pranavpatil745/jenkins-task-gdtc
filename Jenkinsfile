@@ -33,11 +33,10 @@ pipeline {
                     credentialsId: 'AWS-Credentials',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])   
-                        steps
-                        {
-                            def ecrRepoURL = env.ECR_REPO_URL
-                            sh "docker build -t ${ecrRepoURL}:latest ."
-                        }
+                       {
+                       ecrRepoURL = env.ECR_REPO_URL
+                    }
+                    sh "docker build -t ${ecrRepoURL}:latest ."
             }
         }
     }
