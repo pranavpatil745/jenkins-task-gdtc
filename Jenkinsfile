@@ -26,18 +26,24 @@ pipeline {
 		 
             }
         }
-        stage("Credentials Authentication") {
-             steps {
-                    withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS-Credentials',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])   
-                       {
-                       ecrRepoURL = env.ECR_REPO_URL
-                    }
-                    sh "docker build -t ${ecrRepoURL}:latest ."
+        stage("Logging") { 
+
+             steps { 
+
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'AWS-Credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']])
+             {
+            script {
+                echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
+                echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
+
+                // Access ECR_REPO_URL directly from the environment
+                echo "ECR Repository URL: ${ECR_REPO_URL}"
+
+                // Use ECR_REPO_URL in specific steps
+                sh "docker build -t ${ECR_REPO_URL}:latest ."
+                   }
+                }
             }
-        }
+         }
     }
 }
