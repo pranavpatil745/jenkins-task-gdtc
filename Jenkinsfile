@@ -67,21 +67,7 @@ pipeline {
                    sh "docker tag my-app:latest 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
                    sh "docker push 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
                  } 
-
             } 
          } 
-         stage("Trigger Lambda Function") {
-               steps {
-               script {
-                 def lambdaConfig = [
-                 functionName: 'docker-jenkins-lambda',
-                 region: 'ap-south-1', // Update with your AWS region
-                 credentialsId: 'AWS-Credentials', // Update with your AWS credentials ID
-            ]
-
-            lambdaInvoke lambdaConfig
-             }
-          }
-       }
-   }   
+    }   
 }
