@@ -30,7 +30,12 @@ pipeline {
 
              steps { 
 
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'AWS-Credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']])
+               withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'AWS-Credentials',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]])
              {
             script {
                 echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
