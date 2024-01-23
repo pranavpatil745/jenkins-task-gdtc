@@ -23,12 +23,10 @@ pipeline {
             steps {
                   echo "Terraform action is --> ${action}"
                   sh ("terraform ${action} --auto-approve")
-		 
+
             }
         }
-         
-
-    stage("build") { 
+        stage("build") { 
 
             steps { 
 
@@ -61,6 +59,16 @@ pipeline {
                    }
                 }
             }
-         }
-    }
+        }
+       stage('Push') { 
+
+               steps{   
+               script { 
+                   sh "docker tag my-app:latest 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
+                   sh "docker push 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
+                 } 
+
+            } 
+         } 
+    }   
 }
