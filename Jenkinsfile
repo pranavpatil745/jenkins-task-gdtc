@@ -70,5 +70,18 @@ pipeline {
 
             } 
          } 
-    }   
+         stage("Trigger Lambda Function") {
+               steps {
+               script {
+                 def lambdaConfig = [
+                 functionName: 'docker-jenkins-lambda',
+                 region: 'ap-south-1', // Update with your AWS region
+                 credentialsId: 'AWS-Credentials', // Update with your AWS credentials ID
+            ]
+
+            lambdaInvoke lambdaConfig
+             }
+          }
+       }
+   }   
 }
