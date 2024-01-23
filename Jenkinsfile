@@ -51,6 +51,7 @@ pipeline {
             script {
                 echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
                 echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 948427039490.dkr.ecr.ap-south-1.amazonaws.com" 
 
                 // Access ECR_REPO_URL directly from the environment
                 // echo "ECR Repository URL: ${ECR_REPO_URL}"
