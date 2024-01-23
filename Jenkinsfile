@@ -60,7 +60,7 @@ pipeline {
                 }
             }
         }
-       stage('Push') { 
+       stage('PushImage') { 
 
                steps{   
                script { 
