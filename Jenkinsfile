@@ -1,7 +1,7 @@
 pipeline {
     agent any
      environment {
-         ECR_REPO_URL = sh(script: 'terraform output ecr_repository_url 2>&1 | sed "s/\x1B\[[0-9;]*[a-zA-Z]//g"', returnStdout: true).trim()
+        ECR_REPO_URL = sh(script: 'terraform output ecr_repository_url', returnStdout: true).trim()
     }
     stages {
         stage('Checkout') {
