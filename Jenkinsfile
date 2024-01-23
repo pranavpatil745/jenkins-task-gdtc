@@ -26,5 +26,18 @@ pipeline {
 		 
             }
         }
+        stage("Credentials Authentication") {
+             steps {
+                    withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'AWS-Credentials',
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])   
+                        {
+                            def ecrRepoURL = env.ECR_REPO_URL
+                            sh "docker build -t ${ecrRepoURL}:latest ."
+                        }
+            }
+        }
     }
 }
