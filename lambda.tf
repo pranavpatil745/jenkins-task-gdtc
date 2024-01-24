@@ -38,7 +38,7 @@ resource "aws_iam_role_policy_attachment" "lambda_ecr_policy_attachment" {
 resource "aws_lambda_function" "my_lambda_function" {
   function_name    = "docker-jenkins-lambda"
   role             = aws_iam_role.lambda_ecr_role.arn  # Assume you have an IAM role created for Lambda
-  image_uri        = "948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest"  # Replace with your ECR image URI
+  image_uri        = "accountid.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest"  # Replace with your ECR image URI
   package_type     = "Image"
   timeout          = 300  # Update with your desired timeout in seconds
   memory_size      = 512  # Update with your desired memory size in MB

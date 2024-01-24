@@ -49,7 +49,7 @@ pipeline {
             script {
                 echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
                 echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 948427039490.dkr.ecr.ap-south-1.amazonaws.com" 
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin youraccountid.dkr.ecr.ap-south-1.amazonaws.com" 
 
                 // Access ECR_REPO_URL directly from the environment
                 // echo "ECR Repository URL: ${ECR_REPO_URL}"
@@ -64,8 +64,8 @@ pipeline {
 
                steps{   
                script { 
-                   sh "docker tag my-app:latest 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
-                   sh "docker push 948427039490.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
+                   sh "docker tag my-app:latest youraccountid.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
+                   sh "docker push youraccid.dkr.ecr.ap-south-1.amazonaws.com/lambdaxjenkins:latest" 
                  } 
             } 
          } 
